@@ -56,9 +56,9 @@ class BinarySearchTree {
   }
 
   find(data) {
-    if (!this.root) return null;
+    if (!this.rootNode) return null;
 
-    let current = this.root;
+    let current = this.rootNode;
     let found = false;
     while (current && !found) {
       if (data < current.data) {
@@ -70,70 +70,36 @@ class BinarySearchTree {
       }
     }
 
-    if (!found) return undefined;
+    if (!found) return null;
     return found;
   }
 
-  remove(data) {
-    this.rootNode = removeNode(this.rootNode, data);
-
-    // a recursive function to insert a new data in binary search tree
-
-    function removeNode(current, data) {
-      // base case, if the tree is empty
-
-      if (current === null) return current;
-
-      // when data is the same as current's data, this is the node to be deleted
-
-      if (data === current.data) {
-        // for case 1 and 2, node without child or with one child
-
-        if (current.left === null && current.right === null) {
-          return null;
-        } else if (current.left === null) {
-          return current.right;
-        } else if (current.right === null) {
-          return current.left;
-        } else {
-          /// node with two children, get the inorder successor,
-          //smallest in the right subtree
-
-          let tempNode = kthSmallestNode(current.right);
-          current.data = tempNode.data;
-
-          /// delete the inorder successor
-
-          current.right = removeNode(current.right, tempNode.data);
-          return current;
-        }
-
-        // recur down the tree
-      } else if (data < current.data) {
-        current.left = removeNode(current.left, data);
-        return current;
-      } else {
-        current.right = removeNode(current.right, data);
-        return current;
-      }
-    }
-
-    /// helper function to find the smallest node
-
-    function kthSmallestNode(node) {
-      while (!node.left === null) node = node.left;
-
-      return node;
-    }
+  remove(/*data*/) {
+    throw new NotImplementedError('Not implemented');
+    // remove line with error and write your code here
   }
   min() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+    return minNode(this.rootNode).data;
+
+    function minNode(node){
+
+    if (node.left === null)
+        return node;
+    else
+        return minNode(node.left);
+    }
   }
 
   max() {
-    throw new NotImplementedError("Not implemented");
-    // remove line with error and write your code here
+    return maxNode(this.rootNode).data;
+
+    function maxNode(node){
+
+    if (node.right === null)
+        return node;
+    else
+        return maxNode(node.right);
+    }
   }
 }
 
